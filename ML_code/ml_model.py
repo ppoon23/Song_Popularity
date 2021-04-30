@@ -4,7 +4,6 @@ from sklearn.impute import *
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import *
 from sklearn.ensemble import *
-import joblib
 import pickle
 
 # loading data
@@ -41,8 +40,9 @@ preprocessor = ColumnTransformer([
 ])
 
 # Take the final model and fit the model
+### NOTE THIS IS PROTOTYPE
 
-model_final = BaggingRegressor(n_estimators=150, max_features=1.0, n_jobs=-1)
+model_final = BaggingRegressor(n_estimators=50, max_features=1.0, n_jobs=-1)
 model_final_pipe = Pipeline([('preprocessor', preprocessor),
                              ('bag', TransformedTargetRegressor(regressor=model_final,
                                                                 transformer=QuantileTransformer(n_quantiles=300,
@@ -51,4 +51,4 @@ model_final_pipe = Pipeline([('preprocessor', preprocessor),
 model_final_pipe.fit(X, y)
 
 # Save the model as pkl
-joblib.dump(model_final_pipe, '../model_compressed.pkl.gz')
+pickle.dump(model_final_pipe, open('../model_final_trained.pkl', 'wb'))
