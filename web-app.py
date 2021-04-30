@@ -2,7 +2,9 @@ import streamlit as st
 import pickle
 import numpy as np
 import pandas as pd
+import gzip
 import plotly.graph_objects as go
+import joblib
 
 ### Code adopted from https://github.com/dataprofessor/code/blob/master/streamlit/part2/iris-ml-app.py
 
@@ -71,7 +73,10 @@ fig = go.Figure(data=go.Bar(x=columns, y=y), layout_title_text='Audio Features f
 st.plotly_chart(fig, use_container_width=True)
 
 # load from pickle file
-model_final_pipe = pickle.load(open('model_final_trained.pkl', 'rb'))
+# with gzip.open('model_compressed.pkl.gz', 'rb') as f:
+#     model_final_pipe = pickle.load(f)
+
+model_final_pipe = joblib.load('model_compressed.pkl')
 
 prediction = model_final_pipe.predict(df)
 

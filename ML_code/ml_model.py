@@ -4,6 +4,7 @@ from sklearn.impute import *
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import *
 from sklearn.ensemble import *
+import joblib
 import pickle
 
 # loading data
@@ -50,4 +51,4 @@ model_final_pipe = Pipeline([('preprocessor', preprocessor),
 model_final_pipe.fit(X, y)
 
 # Save the model as pkl
-pickle.dump(model_final_pipe, open('model_final_trained.pkl', 'wb'))
+joblib.dump(model_final_pipe, '../model_compressed.pkl.gz')
